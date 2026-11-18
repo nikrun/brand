@@ -270,6 +270,33 @@ $ghCards = @(
         kw     = 'unit '
         ident  = 'nikrun.vscode'
         right  = 'github.com/nikrun/vscode'
+    },
+    @{
+        file   = 'github-social-web.png'
+        suffix = '/web'
+        line1  = '// Official nikrun.dev landing page, docs & installer endpoints.'
+        line2  = "// VitePress docs $([char]0x00B7) install.ps1 & install.sh $([char]0x00B7) user-scope setup"
+        kw     = 'unit '
+        ident  = 'nikrun.web'
+        right  = 'github.com/nikrun/web'
+    },
+    @{
+        file   = 'github-social-brand.png'
+        suffix = '/brand'
+        line1  = '// Official logos, icons, favicons & social preview cards.'
+        line2  = "// Canonical SVG masters $([char]0x00B7) multi-frame ICO $([char]0x00B7) deterministic PNGs"
+        kw     = 'unit '
+        ident  = 'nikrun.brand'
+        right  = 'github.com/nikrun/brand'
+    },
+    @{
+        file   = 'github-social-build-lib.png'
+        suffix = '/build-lib'
+        line1  = '// Shared PowerShell build, SBOM & release automation library.'
+        line2  = "// Versioning $([char]0x00B7) changelog specs $([char]0x00B7) CycloneDX SBOM $([char]0x00B7) GitHub Actions"
+        kw     = 'unit '
+        ident  = 'nikrun.build'
+        right  = 'github.com/nikrun/build-lib'
     }
 )
 
