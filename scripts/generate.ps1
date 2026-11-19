@@ -143,11 +143,14 @@ Write-Host "Generated $IcoPath (16, 24, 32, 48, 256 px)"
 
 # Transparent 2x Retina Lockup PNGs (for VS Code Marketplace README, which restricts external SVGs)
 function Render-LockupPng([string]$SvgFile, [string]$OutPngFile) {
+    $svgRaw = [System.IO.File]::ReadAllText($SvgFile)
+    $vbMatch = [regex]::Match($svgRaw, 'viewBox="0 0 (\d+(?:\.\d+)?) 256"')
+    $vbW = if ($vbMatch.Success) { [double]::Parse($vbMatch.Groups[1].Value, [System.Globalization.CultureInfo]::InvariantCulture) } else { 839.0 }
     $layers = Get-SvgLayers $SvgFile
-    # ViewBox is 841 x 256 -> render at 2x height = 160px (526 x 160 px)
+    # Render at 2x height = 160px
     $h = 160
     $sc = [float]$h / 256.0
-    $w = [int][Math]::Round(841.0 * $sc)
+    $w = [int][Math]::Round($vbW * $sc)
     $bmp = New-Object System.Drawing.Bitmap($w, $h, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
     $gl = [System.Drawing.Graphics]::FromImage($bmp)
     $gl.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -246,7 +249,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-cli.png'
-        suffix = '/cli'
+        suffix = 'CLI'
         line1  = '// Standalone zero-dependency toolchain CLI for Free Pascal.'
         line2  = "// SDK manager $([char]0x00B7) nik.yaml builder $([char]0x00B7) packages $([char]0x00B7) built-in LSP"
         kw     = 'program '
@@ -255,7 +258,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-sdk.png'
-        suffix = '/sdk'
+        suffix = 'SDKs'
         line1  = '// Portable, SHA-256 verified Free Pascal compiler SDKs.'
         line2  = "// Multi-version (3.2.2..3.3.1) $([char]0x00B7) win64, linux & darwin (x86_64 & aarch64)"
         kw     = 'unit '
@@ -264,7 +267,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-vscode.png'
-        suffix = '/vscode'
+        suffix = 'for VS Code'
         line1  = '// Zero-config Free Pascal & Object Pascal support for VS Code.'
         line2  = "// Built-in nik lsp $([char]0x00B7) SDK & profile switchers $([char]0x00B7) nik.yaml schema"
         kw     = 'unit '
@@ -273,7 +276,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-web.png'
-        suffix = '/web'
+        suffix = 'Web & Docs'
         line1  = '// Official nikrun.dev landing page, docs & installer endpoints.'
         line2  = "// VitePress docs $([char]0x00B7) install.ps1 & install.sh $([char]0x00B7) user-scope setup"
         kw     = 'unit '
@@ -282,7 +285,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-brand.png'
-        suffix = '/brand'
+        suffix = 'Brand'
         line1  = '// Official logos, icons, favicons & social preview cards.'
         line2  = "// Canonical SVG masters $([char]0x00B7) multi-frame ICO $([char]0x00B7) deterministic PNGs"
         kw     = 'unit '
@@ -291,7 +294,7 @@ $ghCards = @(
     },
     @{
         file   = 'github-social-build-lib.png'
-        suffix = '/build-lib'
+        suffix = 'Build Lib'
         line1  = '// Shared PowerShell build, SBOM & release automation library.'
         line2  = "// Versioning $([char]0x00B7) changelog specs $([char]0x00B7) CycloneDX SBOM $([char]0x00B7) GitHub Actions"
         kw     = 'unit '
@@ -300,7 +303,7 @@ $ghCards = @(
     }
 )
 
-$fontBadge = New-Object System.Drawing.Font('Cascadia Code', 54, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+$fontBadge = New-Object System.Drawing.Font('Cascadia Code', 48, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
 
 foreach ($card in $ghCards) {
     $cw = 1280; $ch = 640
@@ -323,8 +326,7 @@ foreach ($card in $ghCards) {
     }
 
     if ($card.suffix.Length -gt 0) {
-        # Lockup width at scale 0.68 is 841 * 0.68 = 571.9 -> starts right after "nikrun" at x=702
-        $gc.DrawString($card.suffix, $fontBadge, $bCyan, 700, 173, $sf)
+        $gc.DrawString($card.suffix, $fontBadge, $bCyan, 704, 193, $sf)
     }
 
     $gc.DrawString($card.line1, $fontHero, $bComment, 128, 342)

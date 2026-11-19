@@ -28,7 +28,7 @@ It is consumed as a Git submodule (`brand/`) across [`nikrun/cli`](https://githu
   - `nikrun-icon-light.svg` — Pure negative-space emblem (`#111111`) for light surfaces.
   - `nikrun-icon-dark-mono.svg` — Dark-surface emblem (`#0b0e14` interior with `#f1f5f9` contour & highlights).
   - `nikrun-favicon.svg` & `favicon.svg` — Tight-cropped small-viewport vector mark (`16×16`–`32×32`) and adaptive `prefers-color-scheme` browser favicon.
-  - `nikrun-lockup-light.svg` & `nikrun-lockup-dark-mono.svg` — Horizontal lockups with outlined `nikrun` wordmark (`Cascadia Code Bold`, OFL-1.1).
+  - `nikrun-lockup-light.svg` & `nikrun-lockup-dark-mono.svg` — Horizontal lockups with outlined **Nikrun** wordmark (`Cascadia Code Bold`, OFL-1.1).
   - `nikrun-icon-dark-color.svg` & `nikrun-lockup-dark-color.svg` — Optional accent-color variants.
 - **`ico/` — Application & Browser Icon:**
   - `nikrun.ico` — Multi-resolution icon (`16`, `24`, `32`, `48`, `256 px` 32-bit PNG frames) for Windows executables and browser favicons.
